@@ -71,3 +71,7 @@ C:\Users\Xroni\Documents\GitHub\TestTheTask\TestTheTask\TestTheTask\bin\Microsof
 C:\Users\Xroni\Documents\GitHub\TestTheTask\TestTheTask\TestTheTask\obj\Debug\TestTheTask.csprojResolveAssemblyReference.cache
 C:\Users\Xroni\Documents\GitHub\TestTheTask\TestTheTask\TestTheTask\obj\Debug\TestTheTask.dll
 C:\Users\Xroni\Documents\GitHub\TestTheTask\TestTheTask\TestTheTask\obj\Debug\TestTheTask.pdb
+C:\Users\Xroni\Documents\GitHub\TestTheTask\TestTheTask\TestTheTask\bin\EntityFramework.dll
+C:\Users\Xroni\Documents\GitHub\TestTheTask\TestTheTask\TestTheTask\bin\EntityFramework.SqlServer.dll
+C:\Users\Xroni\Documents\GitHub\TestTheTask\TestTheTask\TestTheTask\bin\EntityFramework.xml
+C:\Users\Xroni\Documents\GitHub\TestTheTask\TestTheTask\TestTheTask\bin\EntityFramework.SqlServer.xml
