@@ -1,24 +1,84 @@
-﻿<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
-        a broad range of clients, including browsers and mobile devices. ASP.NET Web API
-        is an ideal platform for building RESTful applications on the .NET Framework.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301871">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301872">Learn more &raquo;</a></p>
-    </div>
-</div>
+﻿<!--Место для блока списка контрагентов-->
+<div id="tableBlock"></div>
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+ 
+            GetAllContrAgents();
+ 
+            $("#editContrAgent").click(function (event) {
+                event.preventDefault();
+                EditContrAgent();
+            });
+ 
+        });
+        // Получение списка контрагентов по ajax-запросу
+        function GetAllContrAgents() {
+         
+            $("#createBlock").css('display', 'block');
+            $("#editBlock").css('display', 'none');
+            $.ajax({
+                url: '/api/values',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    WriteResponse(data);
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                }
+            });
+        }
+        
+        // вывод полученных данных на экран - список контр агентов
+// ReSharper disable once InconsistentNaming
+        function WriteResponse(ContrAgents) {
+            var strResult = "<table><th>ID</th><th>Название</th><th>Расчетный счет</th><th>ИНН</th>";
+            $.each(ContrAgents, function (index, ContrAgent) {
+                strResult += "<tr><td>" + ContrAgent.Id + "</td><td> " + ContrAgent.Name + "</td><td>" + 
+                    ContrAgent.Сheck + "</td><td>" + ContrAgent.INN +
+                    "</td><td><a id='editItem' data-item='" + ContrAgent.Id + "' onclick='EditItem(this);' >Карточка контр агента</a></td>";
+            });
+            strResult += "</table>";
+            $("#tableBlock").html(strResult);
+         
+        }
+     
+        // обработчик получения карточки
+        function EditItem (el) {
+            // получаем id карточки контрагента
+            var id = $(el).attr('data-item');
+            GetContrAgent(id);
+        }
+        // вывод данных карточки контрагента (отредактирую по другому с дополнительными данными)
+        function ShowContrAgent(ContrAgent) {
+            var strResult = "<table><th>ID</th><th>Название</th><th>Рассчетный счет</th><th>ИНН</th>";
+            strResult += "<tr><td>" +
+                ContrAgent.Id +
+                "</td><td> " +
+                ContrAgent.Name +
+                "</td><td>" +
+                ContrAgent.Сheck +
+                "</td><td>" +
+                ContrAgent.INN;
+            strResult += "</table>";
+            $("#tableBlock").html(strResult);
+
+        }
+        // запрос карточки контрагента
+        function GetContrAgent(id) {
+            $.ajax({
+                url: '/api/values/' + id,
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    ShowContrAgent(data);
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                }
+            });
+        }
+    </script>
+}
