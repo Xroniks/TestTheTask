@@ -75,3 +75,5 @@ C:\Users\Xroni\Documents\GitHub\TestTheTask\TestTheTask\TestTheTask\bin\EntityFr
 C:\Users\Xroni\Documents\GitHub\TestTheTask\TestTheTask\TestTheTask\bin\EntityFramework.SqlServer.dll
 C:\Users\Xroni\Documents\GitHub\TestTheTask\TestTheTask\TestTheTask\bin\EntityFramework.xml
 C:\Users\Xroni\Documents\GitHub\TestTheTask\TestTheTask\TestTheTask\bin\EntityFramework.SqlServer.xml
+C:\Users\Xroni\Documents\GitHub\TestTheTask\TestTheTask\TestTheTask\bin\Dapper.dll
+C:\Users\Xroni\Documents\GitHub\TestTheTask\TestTheTask\TestTheTask\bin\Dapper.xml
