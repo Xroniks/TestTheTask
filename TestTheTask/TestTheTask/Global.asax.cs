@@ -16,9 +16,7 @@ namespace TestTheTask
     {
         protected void Application_Start()
         {
-            //Загружаем стандартные данные с помощью контекста данных при загрузке
-            //123123
-            Database.SetInitializer(new ContrAgentDbInitializer());
+            //Database.SetInitializer(new ContrAgentDbInitializer());
 
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);

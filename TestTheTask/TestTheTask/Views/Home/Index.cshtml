@@ -1,84 +1,69 @@
 ﻿<!--Место для блока списка контрагентов-->
-<div id="tableBlock"></div>
+<div id="ListBlock"></div>
 @section scripts
 {
     <script type="text/javascript">
         $(document).ready(function () {
- 
-            GetAllContrAgents();
- 
-            $("#editContrAgent").click(function (event) {
-                event.preventDefault();
-                EditContrAgent();
-            });
- 
+
+            GetAllContragents();
+
         });
-        // Получение списка контрагентов по ajax-запросу
-        function GetAllContrAgents() {
-         
-            $("#createBlock").css('display', 'block');
-            $("#editBlock").css('display', 'none');
+
+        // Запрос списка контрагентов по ajax-запросу
+        function GetAllContragents() {
+
             $.ajax({
                 url: '/api/values',
                 type: 'GET',
                 dataType: 'json',
                 success: function (data) {
-                    WriteResponse(data);
+                    WriteListContragents(data);
                 },
-                error: function (x, y, z) {
-                    alert(x + '\n' + y + '\n' + z);
-                }
             });
         }
         
-        // вывод полученных данных на экран - список контр агентов
-// ReSharper disable once InconsistentNaming
-        function WriteResponse(ContrAgents) {
+        // Вывод полученных данных на экран - (список контрaгентов)
+        function WriteListContragents(Contragents) {
             var strResult = "<table><th>ID</th><th>Название</th><th>Расчетный счет</th><th>ИНН</th>";
-            $.each(ContrAgents, function (index, ContrAgent) {
-                strResult += "<tr><td>" + ContrAgent.Id + "</td><td> " + ContrAgent.Name + "</td><td>" + 
-                    ContrAgent.Schet + "</td><td>" + ContrAgent.INN +
-                    "</td><td><a id='editItem' data-item='" + ContrAgent.Id + "' onclick='EditItem(this);' >Карточка контр агента</a></td>";
+            $.each(Contragents, function (index, Contragent) {
+                strResult += "<tr><td>" + Contragent.Id + "</td>" +
+                                 "<td>" + Contragent.NameContragent + "</td>" +
+                                 "<td>" + Contragent.Checkingaccount + "</td>" +
+                                 "<td>" + Contragent.Inn + "</td>" +
+                                 "<td><a id='editItem' data-item='" + Contragent.Id + "' onclick='EditItem(this);' >Карточка контрагента</a></td>";
             });
             strResult += "</table>";
-            $("#tableBlock").html(strResult);
+            $("#ListBlock").html(strResult);
          
         }
      
-        // обработчик получения карточки
-        function EditItem (el) {
-            // получаем id карточки контрагента
-            var id = $(el).attr('data-item');
-            GetContrAgent(id);
+        // Обработчик получения id карточки контрагента
+        function EditItem (Element) {
+            var id = $(Element).attr('data-item');
+            GetContragent(id);
         }
-        // вывод данных карточки контрагента (отредактирую по другому с дополнительными данными)
-        function ShowContrAgent(ContrAgent) {
-            var strResult = "<table><th>ID</th><th>Название</th><th>Рассчетный счет</th><th>ИНН</th>";
-            strResult += "<tr><td>" +
-                ContrAgent.Id +
-                "</td><td> " +
-                ContrAgent.Name +
-                "</td><td>" +
-                ContrAgent.Schet +
-                "</td><td>" +
-                ContrAgent.INN;
-            strResult += "</table>";
-            $("#tableBlock").html(strResult);
 
-        }
-        // запрос карточки контрагента
-        function GetContrAgent(id) {
+        // Запрос карточки контрагента
+        function GetContragent(id) {
             $.ajax({
                 url: '/api/values/' + id,
                 type: 'GET',
                 dataType: 'json',
                 success: function (data) {
-                    ShowContrAgent(data);
+                    ShowContragent(data);
                 },
-                error: function (x, y, z) {
-                    alert(x + '\n' + y + '\n' + z);
-                }
             });
+        }
+
+        // Вывод данных карточки контрагента
+        function ShowContragent(Contragent) {
+            var strResult = "<table><th>ID</th><th>Название</th><th>Рассчетный счет</th><th>ИНН</th>";
+            strResult += "<tr><td>" + Contragent.Id + "</td>" +
+                             "<td> " + Contragent.NameContragent + "</td>" +
+                             "<td>" +Contragent.Checkingaccount +"</td>" +
+                             "<td>" + Contragent.Inn;
+            strResult += "</table>";
+            $("#ListBlock").html(strResult);
         }
     </script>
 }

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -11,42 +9,40 @@ namespace TestTheTask.Models
 {
     public class ContragentRepository
     {
+        //Подключение к требуемой базе данных
+        string ConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
-        string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-        public List<ContrAgent> GetUsers()
+
+        //Получение списка всех контрагентов
+        public List<Contragent> GetContragents()
         {
-            List<ContrAgent> users = new List<ContrAgent>();
-            using (IDbConnection db = new SqlConnection(connectionString))
+            List<Contragent> Contragents = new List<Contragent>();
+            using (IDbConnection db = new SqlConnection(ConnectionString))
             {
-                users = db.Query<ContrAgent>("SELECT * FROM ContrAgents").ToList();
+                Contragents = db.Query<Contragent>("SELECT * FROM Contragents").ToList();
             }
-            return users;
+            return Contragents;
         }
 
-        public ContrAgent Get(int id)
+        //Получение контрагента с требуемым id
+        public Contragent GetContragent(int id)
         {
-            ContrAgent user = null;
-            using (IDbConnection db = new SqlConnection(connectionString))
+            Contragent Contragent = null;
+            using (IDbConnection db = new SqlConnection(ConnectionString))
             {
-                user = db.Query<ContrAgent>("SELECT * FROM ContrAgents WHERE Id = @id", new { id }).FirstOrDefault();
+                Contragent = db.Query<Contragent>("SELECT * FROM Contragents WHERE Id = @id", new { id }).FirstOrDefault();
             }
-            return user;
+            return Contragent;
         }
 
-        public void Create(ContrAgent contragent)
+        //Создание и добавление контрагента в базу данных
+        public void CreateContragent(Contragent Contragent)
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = new SqlConnection(ConnectionString))
             {
-                //var sqlQuery = "INSERT INTO ContrAgents (Name, Check, INN) VALUES(@Name, @Check, @INN); SELECT CAST(SCOPE_IDENTITY() as int)";
-                //db.Execute(sqlQuery, contragent);
-                //var userId = db.Query<int>(sqlQuery, contragent).FirstOrDefault();
-                //contragent.Id = userId;
-
-                var sqlQuery = "INSERT INTO ContrAgents (Name, Schet, INN) VALUES(@Name, @Schet, @INN)";
-                db.Execute(sqlQuery, contragent);
+                var sqlQuery = "INSERT INTO Contragents (NameContragent, Checkingaccount, Inn) VALUES(@NameContragent, @Checkingaccount, @Inn)";
+                db.Execute(sqlQuery, Contragent);
             }
-            //return contragent;
         }
-
     }
 }
