@@ -42,28 +42,11 @@ namespace TestTheTask.Models
                 //var userId = db.Query<int>(sqlQuery, contragent).FirstOrDefault();
                 //contragent.Id = userId;
 
-                var sqlQuery = "INSERT INTO ContrAgents (Name, Check, INN) VALUES(@Name, @Check, @INN)";
+                var sqlQuery = "INSERT INTO ContrAgents (Name, Schet, INN) VALUES(@Name, @Schet, @INN)";
                 db.Execute(sqlQuery, contragent);
             }
             //return contragent;
         }
 
-        public void Update(ContrAgent contragent)
-        {
-            using (IDbConnection db = new SqlConnection(connectionString))
-            {
-                var sqlQuery = "UPDATE Users SET Name = @Name, Age = @Age WHERE Id = @Id";
-                db.Execute(sqlQuery, contragent);
-            }
-        }
-
-        public void Delete(int id)
-        {
-            using (IDbConnection db = new SqlConnection(connectionString))
-            {
-                var sqlQuery = "DELETE FROM Users WHERE Id = @id";
-                db.Execute(sqlQuery, new { id });
-            }
-        }
     }
 }

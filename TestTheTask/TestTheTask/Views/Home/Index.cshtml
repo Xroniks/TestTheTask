@@ -37,7 +37,7 @@
             var strResult = "<table><th>ID</th><th>Название</th><th>Расчетный счет</th><th>ИНН</th>";
             $.each(ContrAgents, function (index, ContrAgent) {
                 strResult += "<tr><td>" + ContrAgent.Id + "</td><td> " + ContrAgent.Name + "</td><td>" + 
-                    ContrAgent.Сheck + "</td><td>" + ContrAgent.INN +
+                    ContrAgent.Schet + "</td><td>" + ContrAgent.INN +
                     "</td><td><a id='editItem' data-item='" + ContrAgent.Id + "' onclick='EditItem(this);' >Карточка контр агента</a></td>";
             });
             strResult += "</table>";
@@ -59,7 +59,7 @@
                 "</td><td> " +
                 ContrAgent.Name +
                 "</td><td>" +
-                ContrAgent.Сheck +
+                ContrAgent.Schet +
                 "</td><td>" +
                 ContrAgent.INN;
             strResult += "</table>";

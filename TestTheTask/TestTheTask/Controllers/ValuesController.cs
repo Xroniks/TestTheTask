@@ -11,60 +11,61 @@ namespace TestTheTask.Controllers
 {
     public class ValuesController : ApiController
     {
-        
-        ContrAgentContext db = new ContrAgentContext();
+        ContragentRepository repo = new ContragentRepository();
+        //ContrAgentContext db = new ContrAgentContext();
 
         // GET api/values
         public IEnumerable<ContrAgent> GetContrAgents()
         {
-            return db.ContrAgents;
+
+            return repo.GetUsers(); 
+            //return db.ContrAgents;
         }
 
         // GET api/values/5
         public ContrAgent GetContrAgent(int id)
         {
-            ContrAgent ContrAgent = db.ContrAgents.Find(id);
-            return ContrAgent;
+            
+            return repo.Get(id);
         }
 
         // POST api/values
         [HttpPost]
         public void CreateContrAgent([FromBody]ContrAgent ContrAgent)
         {
-            db.ContrAgents.Add(ContrAgent);
-            db.SaveChanges();
+            repo.Create(ContrAgent);
         }
 
         // PUT api/values/5
-        [HttpPut]
-        public void EditBook(int id, [FromBody]ContrAgent ContrAgent)
-        {
-            if (id == ContrAgent.Id)
-            {
-                db.Entry(ContrAgent).State = EntityState.Modified;
+        //[HttpPut]
+        //public void EditBook(int id, [FromBody]ContrAgent ContrAgent)
+        //{
+        //    if (id == ContrAgent.Id)
+        //    {
+        //        db.Entry(ContrAgent).State = EntityState.Modified;
 
-                db.SaveChanges();
-            }
-        }
+        //        db.SaveChanges();
+        //    }
+        //}
 
-        // DELETE api/values/5
-        public void DeleteBook(int id)
-        {
-            ContrAgent ContrAgent = db.ContrAgents.Find(id);
-            if (ContrAgent != null)
-            {
-                db.ContrAgents.Remove(ContrAgent);
-                db.SaveChanges();
-            }
-        }
+        //// DELETE api/values/5
+        //public void DeleteBook(int id)
+        //{
+        //    ContrAgent ContrAgent = db.ContrAgents.Find(id);
+        //    if (ContrAgent != null)
+        //    {
+        //        db.ContrAgents.Remove(ContrAgent);
+        //        db.SaveChanges();
+        //    }
+        //}
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
     }
 }
