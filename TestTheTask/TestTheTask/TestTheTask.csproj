@@ -193,6 +193,7 @@
     <Compile Include="Models\ContrAgent.cs" />
     <Compile Include="Models\ContrAgentContext.cs" />
     <Compile Include="Models\ContrAgentDbInitializer.cs" />
+    <Compile Include="Models\ContragentRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

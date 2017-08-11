@@ -6,6 +6,9 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using TestTheTask.Models;
+using Dapper;
+using System.Data;
+using System.Data.SqlClient;
 
 
 namespace TestTheTask.Controllers
@@ -54,8 +57,11 @@ namespace TestTheTask.Controllers
                 }
             foreach (var contrag in Listcontragent)
             {
-                db.ContrAgents.Add(contrag);
-                db.SaveChanges();
+                ContragentRepository repo = new ContragentRepository();
+
+                repo.Create(contrag);
+                //db.ContrAgents.Add(contrag);
+                //db.SaveChanges();
             }
             db.SaveChanges();
             return View("Index");
