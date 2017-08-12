@@ -190,10 +190,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Logic.cs" />
+    <Compile Include="LogicContragents.cs" />
     <Compile Include="Models\Contragent.cs" />
-    <Compile Include="Models\ContrAgentContext.cs" />
-    <Compile Include="Models\ContrAgentDbInitializer.cs" />
     <Compile Include="Models\ContragentRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -249,7 +247,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\File.cshtml" />
-    <Content Include="Views\Home\Upload.cshtml" />
     <Content Include="Views\Home\Prewiew.cshtml" />
   </ItemGroup>
   <ItemGroup>

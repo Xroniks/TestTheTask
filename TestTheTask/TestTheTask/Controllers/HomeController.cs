@@ -23,14 +23,14 @@ namespace TestTheTask.Controllers
 
         public ActionResult Prewiew(HttpPostedFileBase upload)
         {
-            ViewBag.ListContragents = Logic.Insert(upload);
+            ViewBag.ListContragents = LogicContragents.ParsFile(upload);
             return View();
         }
 
         [HttpPost]
         public ActionResult Upload(List<Contragent> Contragent)
         {
-            Logic.UploadinBd(Contragent);
+            LogicContragents.UploadinBd(Contragent);
             return View("Index");
         }
     }

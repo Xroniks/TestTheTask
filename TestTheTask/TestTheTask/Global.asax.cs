@@ -16,8 +16,6 @@ namespace TestTheTask
     {
         protected void Application_Start()
         {
-            //Database.SetInitializer(new ContrAgentDbInitializer());
-
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

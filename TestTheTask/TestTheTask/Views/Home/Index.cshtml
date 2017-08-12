@@ -61,11 +61,10 @@
             function ShowContragent(Contragent) {
                 var strResult = '<a href="@Url.Action("Index","Home")">' +
                                 '<button>К списку контрагентов</button>' + '</a>' +
-                                "<table><th>ID</th><th>Название</th><th>Расчетный счет</th><th>ИНН</th>";
-                strResult += "<tr><td>" + Contragent.Id + "</td>" +
-                    "<td> " + Contragent.NameContragent + "</td>" +
-                    "<td>" + Contragent.Checkingaccount + "</td>" +
-                    "<td>" + Contragent.Inn;
+                                "<table><tr><th>Название: </th><td> " + Contragent.NameContragent + "</td>" +
+                                       "<tr><th>Расчетный счет: </th><td>" + Contragent.Checkingaccount + "</td></tr>" +
+                                       "<tr><th>БИК: </th><td>" + Contragent.Bik + "</td></tr>" +
+                                       "<tr><th>ИНН: </th><td>" + Contragent.Inn + "</td></tr>";
                 strResult += "</table>";
                 $("#ListBlock").html(strResult);
             }

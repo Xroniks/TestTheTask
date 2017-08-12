@@ -40,7 +40,7 @@ namespace TestTheTask.Models
         {
             using (IDbConnection db = new SqlConnection(ConnectionString))
             {
-                var sqlQuery = "INSERT INTO Contragents (NameContragent, Checkingaccount, Inn) VALUES(@NameContragent, @Checkingaccount, @Inn)";
+                var sqlQuery = "INSERT INTO Contragents (NameContragent, Checkingaccount, Bik, Inn) VALUES(@NameContragent, @Checkingaccount, @Bik, @Inn)";
                 db.Execute(sqlQuery, Contragent);
             }
         }

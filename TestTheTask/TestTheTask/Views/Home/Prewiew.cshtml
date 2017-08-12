@@ -19,6 +19,7 @@
         {
             <input type="hidden" name="Contragent[@k].NameContragent" value="@b.NameContragent"/>
             <input type="hidden" name="Contragent[@k].Checkingaccount" value="@b.Checkingaccount"/>
+            <input type="hidden" name="Contragent[@k].Bik" value="@b.Bik" />
             <input type="hidden" name="Contragent[@(k++)].Inn" value="@b.Inn"/>
         }
         <input type="submit" value="Загрузить контрагентов в базу данных" />
@@ -27,6 +28,7 @@
     <table>
         <th>Название</th>
         <th>Расчетный счет</th>
+        <th>БИК</th>
         <th>ИНН</th>
 
         @foreach (var b in ViewBag.ListContragents)
@@ -34,6 +36,7 @@
             <tr>
                 <td><p>@b.NameContragent</p></td>
                 <td><p>@b.Checkingaccount</p></td>
+                <td><p>@b.Bik</p></td>
                 <td><p>@b.Inn</p></td>
             </tr>
         }

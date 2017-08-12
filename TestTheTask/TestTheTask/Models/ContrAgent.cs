@@ -6,6 +6,7 @@
         public int Id { get ; set ; }
         public string NameContragent { get; set; }
         public string Checkingaccount { get; set; }
+        public string Bik { get; set; }
         public string Inn { get; set; }
     }
 }
