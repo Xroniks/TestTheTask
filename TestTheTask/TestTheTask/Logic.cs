@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using TestTheTask.Models;
 using System.Text;
@@ -9,15 +11,15 @@ using System.Text.RegularExpressions;
 
 namespace TestTheTask
 {
+
     public static class Logic
     {
-        public static void Insert(HttpPostedFileBase upload)
+
+
+        public static List<Contragent> Insert(HttpPostedFileBase upload)
         {
             // Объявляем коллекцию для парсинга загруженного файла
             List<Contragent> ListСontragentOfFile = new List<Contragent>();
-
-            // Объявляем класс для работы с базами данных
-            ContragentRepository ReposContagents = new ContragentRepository();
 
             HashSet<string> oddNumbers = new HashSet<string>();
 
@@ -33,11 +35,11 @@ namespace TestTheTask
                 upload.SaveAs("D:/" + fileName);
                 string fileput = "D:/" + fileName;
                 // Прочитываем файл и показываем его по строкам.
-                System.IO.StreamReader file =
-                    new System.IO.StreamReader(fileput, Encoding.Default);
+
+                StreamReader file =
+                    new StreamReader(fileput, Encoding.Default);
                 while ((LineOfFile = file.ReadLine()) != null)
                 {
-                    var contragent = new Contragent();
                     if (LineOfFile.Contains(MasNameFields[0]))
                         MasFieldsInfContragent[0] = Regex.Replace(LineOfFile, MasNameFields[0], String.Empty);
                     if (LineOfFile.IndexOf(MasNameFields[1]) > -1)
@@ -51,11 +53,17 @@ namespace TestTheTask
                 }
                 
                 file.Close();
+            }
+            return ListСontragentOfFile;
+        }
 
-                foreach (var Сontragent in ListСontragentOfFile)
-                {
-                    ReposContagents.CreateContragent(Сontragent);
-                }
+        public static void UploadinBd(List<Contragent> ListСontragentOfFile)
+        {
+            ContragentRepository ReposContagents = new ContragentRepository();
+
+            foreach (var Сontragent in ListСontragentOfFile)
+            {
+                ReposContagents.CreateContragent(Сontragent);
             }
         }
     }

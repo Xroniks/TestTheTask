@@ -1,0 +1,42 @@
+﻿@using System.Security.Cryptography.X509Certificates
+@using TestTheTask.Models
+
+@{
+    ViewBag.Title = "Prewiew";
+}
+<div>
+    <h3>Предпросмотр контрагентов</h3>
+
+    <a href="@Url.Action("Index","Home")">
+        <button>Вернуться к списку контрагентов</button>
+    </a>
+
+    @{
+        int k = 0;
+    }
+    <form method="post" action="/Home/Upload">
+        @foreach (var b in ViewBag.ListContragents)
+        {
+            <input type="hidden" name="Contragent[@k].NameContragent" value="@b.NameContragent"/>
+            <input type="hidden" name="Contragent[@k].Checkingaccount" value="@b.Checkingaccount"/>
+            <input type="hidden" name="Contragent[@(k++)].Inn" value="@b.Inn"/>
+        }
+        <input type="submit" value="Загрузить контрагентов в базу данных" />
+    </form>
+    
+    <table>
+        <th>Название</th>
+        <th>Расчетный счет</th>
+        <th>ИНН</th>
+
+        @foreach (var b in ViewBag.ListContragents)
+        {
+            <tr>
+                <td><p>@b.NameContragent</p></td>
+                <td><p>@b.Checkingaccount</p></td>
+                <td><p>@b.Inn</p></td>
+            </tr>
+        }
+
+    </table>
+</div>

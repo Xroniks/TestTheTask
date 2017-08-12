@@ -250,6 +250,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\File.cshtml" />
     <Content Include="Views\Home\Upload.cshtml" />
+    <Content Include="Views\Home\Prewiew.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

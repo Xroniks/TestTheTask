@@ -1,69 +1,73 @@
 ﻿<!--Место для блока списка контрагентов-->
-<div id="ListBlock"></div>
-@section scripts
+    <div id="ListBlock"></div>
+    @section scripts
 {
-    <script type="text/javascript">
-        $(document).ready(function () {
+        <script type="text/javascript">
+            $(document).ready(function () {
 
-            GetAllContragents();
+                GetAllContragents();
 
-        });
-
-        // Запрос списка контрагентов по ajax-запросу
-        function GetAllContragents() {
-
-            $.ajax({
-                url: '/api/values',
-                type: 'GET',
-                dataType: 'json',
-                success: function (data) {
-                    WriteListContragents(data);
-                },
             });
-        }
-        
-        // Вывод полученных данных на экран - (список контрaгентов)
-        function WriteListContragents(Contragents) {
-            var strResult = "<table><th>ID</th><th>Название</th><th>Расчетный счет</th><th>ИНН</th>";
-            $.each(Contragents, function (index, Contragent) {
+
+            // Запрос списка контрагентов по ajax-запросу
+            function GetAllContragents() {
+
+                $.ajax({
+                    url: '/api/values',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        WriteListContragents(data);
+                    },
+                });
+            }
+
+            // Вывод полученных данных на экран - (список контрaгентов)
+            function WriteListContragents(Contragents) {
+                var strResult = '<a href="@Url.Action("File","Home")">' +
+                                '<button> Загрузить выписку </button>' + '</a>' +
+                                "<table><th>ID</th><th>Название</th><th>Расчетный счет</th><th>ИНН</th>";
+                $.each(Contragents, function (index, Contragent) {
+                    strResult += "<tr><td>" + Contragent.Id + "</td>" +
+                        "<td>" + Contragent.NameContragent + "</td>" +
+                        "<td>" + Contragent.Checkingaccount + "</td>" +
+                        "<td>" + Contragent.Inn + "</td>" +
+                        "<td><a id='editItem' data-item='" + Contragent.Id + "' onclick='EditItem(this);' >Карточка контрагента</a></td>";
+                });
+                strResult += "</table>";
+                $("#ListBlock").html(strResult);
+
+            }
+
+            // Обработчик получения id карточки контрагента
+            function EditItem(Element) {
+                var id = $(Element).attr('data-item');
+                GetContragent(id);
+            }
+
+            // Запрос карточки контрагента
+            function GetContragent(id) {
+                $.ajax({
+                    url: '/api/values/' + id,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        ShowContragent(data);
+                    },
+                });
+            }
+
+            // Вывод данных карточки контрагента
+            function ShowContragent(Contragent) {
+                var strResult = '<a href="@Url.Action("Index","Home")">' +
+                                '<button>К списку контрагентов</button>' + '</a>' +
+                                "<table><th>ID</th><th>Название</th><th>Расчетный счет</th><th>ИНН</th>";
                 strResult += "<tr><td>" + Contragent.Id + "</td>" +
-                                 "<td>" + Contragent.NameContragent + "</td>" +
-                                 "<td>" + Contragent.Checkingaccount + "</td>" +
-                                 "<td>" + Contragent.Inn + "</td>" +
-                                 "<td><a id='editItem' data-item='" + Contragent.Id + "' onclick='EditItem(this);' >Карточка контрагента</a></td>";
-            });
-            strResult += "</table>";
-            $("#ListBlock").html(strResult);
-         
-        }
-     
-        // Обработчик получения id карточки контрагента
-        function EditItem (Element) {
-            var id = $(Element).attr('data-item');
-            GetContragent(id);
-        }
-
-        // Запрос карточки контрагента
-        function GetContragent(id) {
-            $.ajax({
-                url: '/api/values/' + id,
-                type: 'GET',
-                dataType: 'json',
-                success: function (data) {
-                    ShowContragent(data);
-                },
-            });
-        }
-
-        // Вывод данных карточки контрагента
-        function ShowContragent(Contragent) {
-            var strResult = "<table><th>ID</th><th>Название</th><th>Рассчетный счет</th><th>ИНН</th>";
-            strResult += "<tr><td>" + Contragent.Id + "</td>" +
-                             "<td> " + Contragent.NameContragent + "</td>" +
-                             "<td>" +Contragent.Checkingaccount +"</td>" +
-                             "<td>" + Contragent.Inn;
-            strResult += "</table>";
-            $("#ListBlock").html(strResult);
-        }
-    </script>
-}
+                    "<td> " + Contragent.NameContragent + "</td>" +
+                    "<td>" + Contragent.Checkingaccount + "</td>" +
+                    "<td>" + Contragent.Inn;
+                strResult += "</table>";
+                $("#ListBlock").html(strResult);
+            }
+        </script>
+    }

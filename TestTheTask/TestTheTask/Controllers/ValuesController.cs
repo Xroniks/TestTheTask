@@ -26,9 +26,12 @@ namespace TestTheTask.Controllers
 
         // POST api/values
         [HttpPost]
-        public void CreateContrAgent([FromBody]Contragent Contragent)
+        public void CreateContrAgents([FromBody]IEnumerable<Contragent> Contragents)
         {
-            ReposContragents.CreateContragent(Contragent);
+            foreach (var a in Contragents)
+            {
+                ReposContragents.CreateContragent(a);
+            }
         }
     }
 }
