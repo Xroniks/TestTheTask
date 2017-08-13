@@ -5,6 +5,8 @@ using System.Web;
 using TestTheTask.Models;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Web.UI.WebControls;
+using Microsoft.Ajax.Utilities;
 
 
 namespace TestTheTask
@@ -23,17 +25,76 @@ namespace TestTheTask
             const string Inn = "ПлательщикИНН=";
             const string EndDoc = "КонецДокумента";
 
-            if (upload != null)
+            //if (upload.HasFile)
+            //{
+            //    StreamReader reader = new StreamReader(upload.FileContent);
+            //    do
+            //    {
+            //        string textLine = reader.ReadLine();
+
+            //        // do your coding 
+            //        //Loop trough txt file and add lines to ListBox1  
+
+            //    } while (reader.Peek() != -1);
+            //    reader.Close();
+            //}
+
+            string result = new StreamReader(upload.InputStream).ReadToEnd();
+
+            Encoding ascii = Encoding.ASCII;
+            Encoding unicode = Encoding.Unicode;
+
+
+            //byte[] unicodeBytes = unicode.GetBytes(result);
+
+            //byte[] asciiBytes = Encoding.Convert(unicode, ascii, unicodeBytes);
+
+            //char[] asciiChars = new char[ascii.GetCharCount(asciiBytes, 0, asciiBytes.Length)];
+            //ascii.GetChars(asciiBytes, 0, asciiBytes.Length, asciiChars, 0);
+            //string asciiString = new string(asciiChars);
+
+            byte[] asciiBytes = ascii.GetBytes(result);
+            byte[] unicodeBytes = Encoding.Convert(ascii, unicode, asciiBytes);
+
+            char[] unicodeChars = new char[unicode.GetCharCount(unicodeBytes, 0, unicodeBytes.Length)];
+            unicode.GetChars(unicodeBytes, 0, unicodeBytes.Length, unicodeChars, 0);
+            string asciiString = new string(unicodeChars);
+
+
+            byte[] buffer = new byte[upload.InputStream.Length];
+            upload.InputStream.Seek(0, SeekOrigin.Begin);
+            upload.InputStream.Read(buffer, 0, Convert.ToInt32(upload.InputStream.Length));
+            Stream stream2 = new MemoryStream(buffer);
+
+            string LineOfFile;
+            List<string> slist = new List<string>();
+            StreamReader file = new StreamReader(stream2, Encoding.Default);
+            while ((LineOfFile = file.ReadLine()) != null)
+            {
+               slist.Add(LineOfFile);
+
+            }
+
+
+
+            StringReader strReader = new StringReader(asciiString);
+
+
+            
+            
+
+                if (upload != null)
             {
 
-                string fileName = System.IO.Path.GetFileName(upload.FileName);
-                upload.SaveAs("D:/" + fileName);
-                string fileput = "D:/" + fileName;
-                string[] LinesFiles = File.ReadAllLines(fileput, Encoding.Default);
+                //string fileName = System.IO.Path.GetFileName(upload.FileName);
+                //upload.SaveAs("D:/" + fileName);
+                //string fileput = "D:/" + fileName;
+
+                //string[] LinesFiles = File.ReadAllLines(fileput, Encoding.Default);
 
                 var ContragentFind = new Contragent();
 
-                foreach (var Line in LinesFiles)
+                foreach (var Line in slist)
                 {
                     if (Line.Contains(NameContragent))
                         ContragentFind.NameContragent = Regex.Replace(Line, NameContragent, String.Empty);

@@ -1,6 +1,8 @@
-﻿@using System.Security.Cryptography.X509Certificates
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using System.Security.Cryptography.X509Certificates
 @using TestTheTask.Models
-
 @{
     ViewBag.Title = "Prewiew";
 }
@@ -14,18 +16,18 @@
     @{
         int k = 0;
     }
-    <form method="post" action="/Home/Upload">
+    <form class="form" method="post" action="/Home/Upload">
         @foreach (var b in ViewBag.ListContragents)
         {
-            <input type="hidden" name="Contragent[@k].NameContragent" value="@b.NameContragent"/>
-            <input type="hidden" name="Contragent[@k].Checkingaccount" value="@b.Checkingaccount"/>
+            <input type="hidden" name="Contragent[@k].NameContragent" value="@b.NameContragent" />
+            <input type="hidden" name="Contragent[@k].Checkingaccount" value="@b.Checkingaccount" />
             <input type="hidden" name="Contragent[@k].Bik" value="@b.Bik" />
-            <input type="hidden" name="Contragent[@(k++)].Inn" value="@b.Inn"/>
+            <input type="hidden" name="Contragent[@(k++)].Inn" value="@b.Inn" />
         }
         <input type="submit" value="Загрузить контрагентов в базу данных" />
     </form>
-    
-    <table>
+
+    <table class="table">
         <th>Название</th>
         <th>Расчетный счет</th>
         <th>БИК</th>
@@ -34,12 +36,13 @@
         @foreach (var b in ViewBag.ListContragents)
         {
             <tr>
-                <td><p>@b.NameContragent</p></td>
-                <td><p>@b.Checkingaccount</p></td>
-                <td><p>@b.Bik</p></td>
-                <td><p>@b.Inn</p></td>
+                <td>@b.NameContragent</td>
+                <td>@b.Checkingaccount</td>
+                <td>@b.Bik</td>
+                <td>@b.Inn</td>
             </tr>
         }
 
     </table>
 </div>
+

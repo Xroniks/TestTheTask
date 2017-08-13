@@ -222,6 +222,7 @@ textarea {
 table {
   border-collapse: collapse;
   border-spacing: 0;
+    background-color: gray;
 }
 
 @media print {
@@ -315,7 +316,6 @@ body {
   font-size: 14px;
   line-height: 1.428571429;
   color: #333333;
-  background-color: #ffffff;
 }
 
 input,
@@ -1427,7 +1427,7 @@ th {
   padding: 8px;
   line-height: 1.428571429;
   vertical-align: top;
-  border-top: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
 }
 
 .table thead > tr > th {
