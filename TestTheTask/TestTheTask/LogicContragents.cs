@@ -5,8 +5,6 @@ using System.Web;
 using TestTheTask.Models;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Web.UI.WebControls;
-using Microsoft.Ajax.Utilities;
 
 
 namespace TestTheTask
@@ -14,114 +12,60 @@ namespace TestTheTask
 
     public static class LogicContragents
     {
-        public static List<Contragent> ParsFile(HttpPostedFileBase upload)
+        public static List<Contragent> ParsFile(HttpPostedFileBase UploadFile)
         {
-            List<Contragent> ListСontragentOfFile = new List<Contragent>();
-            HashSet<string> NoDuplicate = new HashSet<string>();
-
             const string NameContragent = "Плательщик1=";
             const string Checkingaccount = "Плательщик2=";
             const string Bik = "ПлательщикБИК=";
             const string Inn = "ПлательщикИНН=";
             const string EndDoc = "КонецДокумента";
 
-            //if (upload.HasFile)
-            //{
-            //    StreamReader reader = new StreamReader(upload.FileContent);
-            //    do
-            //    {
-            //        string textLine = reader.ReadLine();
-
-            //        // do your coding 
-            //        //Loop trough txt file and add lines to ListBox1  
-
-            //    } while (reader.Peek() != -1);
-            //    reader.Close();
-            //}
-
-            string result = new StreamReader(upload.InputStream).ReadToEnd();
-
-            Encoding ascii = Encoding.ASCII;
-            Encoding unicode = Encoding.Unicode;
-
-
-            //byte[] unicodeBytes = unicode.GetBytes(result);
-
-            //byte[] asciiBytes = Encoding.Convert(unicode, ascii, unicodeBytes);
-
-            //char[] asciiChars = new char[ascii.GetCharCount(asciiBytes, 0, asciiBytes.Length)];
-            //ascii.GetChars(asciiBytes, 0, asciiBytes.Length, asciiChars, 0);
-            //string asciiString = new string(asciiChars);
-
-            byte[] asciiBytes = ascii.GetBytes(result);
-            byte[] unicodeBytes = Encoding.Convert(ascii, unicode, asciiBytes);
-
-            char[] unicodeChars = new char[unicode.GetCharCount(unicodeBytes, 0, unicodeBytes.Length)];
-            unicode.GetChars(unicodeBytes, 0, unicodeBytes.Length, unicodeChars, 0);
-            string asciiString = new string(unicodeChars);
-
-
-            byte[] buffer = new byte[upload.InputStream.Length];
-            upload.InputStream.Seek(0, SeekOrigin.Begin);
-            upload.InputStream.Read(buffer, 0, Convert.ToInt32(upload.InputStream.Length));
-            Stream stream2 = new MemoryStream(buffer);
+            List<Contragent> ListСontragentOfFile = new List<Contragent>();
+            List<string> MasStringOfFile = new List<string>();
+            HashSet<string> NoDuplicate = new HashSet<string>();
 
             string LineOfFile;
-            List<string> slist = new List<string>();
-            StreamReader file = new StreamReader(stream2, Encoding.Default);
-            while ((LineOfFile = file.ReadLine()) != null)
+
+            Contragent ContragentFind = new Contragent();
+
+            if (UploadFile != null)
             {
-               slist.Add(LineOfFile);
+                byte[] buffer = new byte[UploadFile.InputStream.Length];
+                UploadFile.InputStream.Seek(0, SeekOrigin.Begin);
+                UploadFile.InputStream.Read(buffer, 0, Convert.ToInt32(UploadFile.InputStream.Length));
+                Stream streamfile = new MemoryStream(buffer);
+                StreamReader file = new StreamReader(streamfile, Encoding.Default);
 
-            }
-
-
-
-            StringReader strReader = new StringReader(asciiString);
-
-
-            
-            
-
-                if (upload != null)
-            {
-
-                //string fileName = System.IO.Path.GetFileName(upload.FileName);
-                //upload.SaveAs("D:/" + fileName);
-                //string fileput = "D:/" + fileName;
-
-                //string[] LinesFiles = File.ReadAllLines(fileput, Encoding.Default);
-
-                var ContragentFind = new Contragent();
-
-                foreach (var Line in slist)
+                while ((LineOfFile = file.ReadLine()) != null)
                 {
-                    if (Line.Contains(NameContragent))
-                        ContragentFind.NameContragent = Regex.Replace(Line, NameContragent, String.Empty);
+                    MasStringOfFile.Add(LineOfFile);
 
-                    if (Line.Contains(Checkingaccount))
-                        ContragentFind.Checkingaccount = Regex.Replace(Line, Checkingaccount, String.Empty);
-
-                    if (Line.Contains(Bik))
-                        ContragentFind.Bik = Regex.Replace(Line, Bik, String.Empty);
-
-                    if (Line.Contains(Inn)) 
-                        ContragentFind.Inn = Regex.Replace(Line, Inn, String.Empty);
-
-                    if (Line == EndDoc && NoDuplicate.Add(ContragentFind.Inn))
-                    {
-                        ListСontragentOfFile.Add(new Contragent(){ NameContragent = ContragentFind.NameContragent, Checkingaccount = ContragentFind.Checkingaccount, Bik = ContragentFind.Bik,  Inn = ContragentFind.Inn });
-                        ContragentFind.NameContragent = "-";
-                        ContragentFind.Checkingaccount = "-";
-                        ContragentFind.Bik = "-";
-                        ContragentFind.Inn = "-";
-                    }
                 }
 
+                foreach (var StringOfFile in MasStringOfFile)
+                {
+                    if (StringOfFile.Contains(NameContragent))
+                        ContragentFind.NameContragent = Regex.Replace(StringOfFile, NameContragent, String.Empty);
+
+                    if (StringOfFile.Contains(Checkingaccount))
+                        ContragentFind.Checkingaccount = Regex.Replace(StringOfFile, Checkingaccount, String.Empty);
+
+                    if (StringOfFile.Contains(Bik))
+                        ContragentFind.Bik = Regex.Replace(StringOfFile, Bik, String.Empty);
+
+                    if (StringOfFile.Contains(Inn)) 
+                        ContragentFind.Inn = Regex.Replace(StringOfFile, Inn, String.Empty);
+
+                    if (StringOfFile == EndDoc && NoDuplicate.Add(ContragentFind.NameContragent))
+                    {
+                        ListСontragentOfFile.Add(new Contragent(){ NameContragent = ContragentFind.NameContragent, Checkingaccount = ContragentFind.Checkingaccount, Bik = ContragentFind.Bik,  Inn = ContragentFind.Inn });
+                    }
+                }
             }
                 
             return ListСontragentOfFile;
         }
+
 
         public static void UploadinBd(List<Contragent> ListСontragentOfFile)
         {
